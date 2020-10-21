@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Index</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./js/db.js"></script>
+    <script src="./js/collections.js" defer></script>
+    <script src="./js/base.js" defer></script>
+    <script src="./js/routes.js" defer></script>
+
+</head>
+
+<body>
+    <div id="content">
+
+        <div id="go-to-statistics-block">
+            <a id="go-to-statistics" href='./statistics.html'>go to statistics</a>
+        </div>
+        <div id="search-block">
+            <input id="search-field" type="text"></input>
+            <button onclick="GlobalSearch();">Search</button>
+        </div>
+
+        <div id="all-images-preview">
+            <p>All images</p>
+        </div>
+        <div id="create-collection-block">
+            <p>Create collection</p>
+            <input type=text id="collection-name-input"></input>
+            <button id="create-collection-button">create</button>
+        </div>
+        <div id="collections-list">
+
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Statistics</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./js/db.js"></script>
+    <script src="./js/statistics.js" defer></script>
+    <script src="./js/routes.js" defer></script>
+
+</head>
+
+<body>
+
+    <div id="content">
+        <div id="used-space-block">
+            <span class="row-span"><label>Usage:</label>
+                <p id="used"></p>
+                <p>/</p>
+                <p id="total"></p>
+            </span>
+            <div id="progressbar">
+                <div id="used-space"></div>
+            </div>
+        </div>
+        <div id="files-amount-block">
+            <span class="row-span">
+                <label>Files in storage:</label>
+                <p id="files-amount"></p>
+            </span>
+            <button onclick="clearAll();">Clear All</button>
+        </div>
+    </div>
+</body>
+
+</html>

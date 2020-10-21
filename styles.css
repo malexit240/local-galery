@@ -1,0 +1,291 @@
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+}
+
+html{
+    height: 100%;
+}
+
+body
+{
+    max-width: 1600px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background-color: #f0f0ff;
+}
+
+#images-container
+{
+    margin: 0 auto;
+    max-width: 1600px;
+    height: fit-content;
+    padding: 0;
+    border-top: #8f2327 solid 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#content{
+    min-height: 100%;
+    background-color: #4b5591;
+}
+
+.image-container{
+    width: 360px;
+    height: 400px;
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.image{
+    margin: auto;
+    max-width: 360px;
+    max-height: 360px;
+    border: #00000024 solid 1px;
+    border-radius: 10px;
+}
+
+#big-size-image
+{
+    max-width: 800px;
+    max-height: 70%;
+}
+.container-column-two{
+    display: flex;
+    flex-direction: row;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+#left-column{
+    display: flex;
+    justify-content: center;
+}
+
+#right-column>span{
+display: flex;
+flex-direction: row;
+}
+
+#right-column>span>p{
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.label{
+    margin-right: 1em;
+}
+
+#image-loader
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f0d2e6;
+    padding: 1em;
+}
+
+#image-loader-container{
+    width: fit-content;
+    margin: 0 auto;
+}
+
+#image-loader-container>div{
+    width: fit-content;
+    margin: 0 auto;
+}
+
+#description-text-area{
+    width:700px;
+    height: 400px;
+    resize:none;
+}
+
+#collections{
+    border: black solid 1px;
+}
+
+.collection-element{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#delete-div{
+    width: fit-content;
+    border: black solid 1px;
+    position: relative;
+}
+
+#delete-div>p{
+    margin: auto;
+}
+
+#delete-div>div{
+    display: none;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0em;
+    left: -5em;
+    white-space: nowrap;
+    background-color: #f0f0ff;
+    border: solid 1px black;
+}
+
+
+#delete-div:hover>div{
+    display: flex;
+}
+
+#control-panel{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 0 5em;
+}
+
+#description-edit{
+    display: none;
+    flex-direction: column;
+    position: relative;
+}
+
+#description-edit>textarea{
+    resize:none;
+    width:inherit;
+    height: 5em;
+}
+
+#name-edit{
+    display: none;
+    flex-direction: column;
+    position: relative;
+}
+
+#collections-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.collection-preview{
+    max-width: 360px;
+    width: fit-content;
+    max-height: 360px;
+    height: fit-content;
+    position: relative;
+    border: solid 5px #00000024;
+    margin: auto;
+    display: flex;
+
+}
+
+#all-images-preview{
+    max-width: 360px;
+    width: fit-content;
+    max-height: 360px;
+    height: fit-content;
+    position: relative;
+    border: solid 5px #00000024;
+    margin: auto;
+    display: flex;
+    
+}
+
+#all-images-preview>p{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 25px;
+    color: white;
+    background-color: #00000091;
+    border-radius: 60px 0px 0px 0px;
+    padding: 1em;
+    margin: auto;
+}
+
+.collection-preview>p{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 25px;
+    color: white;
+    background-color: #00000091;
+    border-radius: 60px 0px 0px 0px;
+    padding: 1em;
+    margin: auto;
+}
+
+.image-preview{
+    margin: auto;
+    max-width: 360px;
+    max-height: 360px;
+}
+
+#search-block{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 0 1em 1em 0;
+}
+
+#progressbar{
+    width: 300px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+}
+
+#used-space{
+    background-color: green;
+    width: 0%;
+    height: 100%;
+}
+
+.row-span{
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    
+}
+
+.row-span>label{
+    margin:1em 1em 1em 0;
+}
+.row-span>p{
+    margin:1em 1em 1em 0;
+}
+
+#used-space-block{
+    margin: 0 0 0 1em;
+}
+
+#files-amount-block{
+    margin: 0 0 0 1em;
+}
+
+#go-to-statistics{
+    background-color: #efefef;
+    border: black solid 1px;
+    text-decoration: none;
+    color: black;
+    padding:0.5em;
+}
+
+#go-to-statistics-block{
+    display: flex;
+    justify-content: flex-end;
+    padding: 1em;
+}
+
+#create-collection-block{
+    padding: 1em;
+}
