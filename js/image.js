@@ -4,7 +4,7 @@ function downloadImage() {
 
 
 function removeImage() {
-    RequestToDB(function () {
+    RequestToDB(() => {
         window.db.transaction("imagesStorage", "readwrite").objectStore("imagesStorage").delete(Number(window.image_id)).onsuccess = event => {
             window.history.back();
         }
@@ -58,7 +58,7 @@ function displayImage() {
     document.getElementById('image-size-height').innerHTML = window.image.sizes.height;
     document.getElementById('image-wage').innerHTML = parseFloat(window.image.wage).toFixed(2) + 'MB';
     document.getElementById('image-type').innerHTML = window.image.mimetype;
-    document.getElementById('image-create-time').innerHTML = window.image.create_time;
+    document.getElementById('image-create-time').innerHTML = (new Date(window.image.create_time * 1000)).toDateString();
     document.getElementById('image-description').innerHTML = addHashTags(window.image.description);
     document.getElementById('image-tags').innerHTML = window.image.tags;
 

@@ -20,7 +20,7 @@ function displayImage(image) {
 function loadImagesInCollection() {
     window.images = new Array();
 
-    window.db.transaction("imagesStorage").objectStore("imagesStorage").openCursor().onsuccess = function (event) {
+    window.db.transaction("imagesStorage").objectStore("imagesStorage").openCursor().onsuccess = event => {
         let cursor = event.target.result;
         if (cursor) {
             if (window.collection.images.includes(cursor.key)) {
@@ -46,11 +46,11 @@ function downloadImagesAsArchiveButton() {
         button.innerHTML = 'Wait';
         var zip = new JSZip();
         window.images.forEach(element => {
-            zip.file(`${element.name}`, (element.image.replace(/^data:image\/(png|jpg|jpeg);base64,/, "")), { base64: true });
+            zip.file(`${element.name}`, (element.image.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, "")), { base64: true });
         })
 
         zip.generateAsync({ type: "blob" })
-            .then(function (content) {
+            .then(content => {
                 saveAs(content, "example.zip");
                 button.removeAttribute('disabled');
                 button.innerHTML = 'Click!';

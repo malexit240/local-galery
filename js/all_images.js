@@ -1,4 +1,8 @@
 (function () {
-    RequestToDB(loadImagesFromDB);
+    loadImagesFromDB().then(images => {
+        images.forEach(image => {
+            displayImage(image);
+        })
+    });
     RequestToDB(startImageLoader);
 })();

@@ -1,4 +1,6 @@
 function openIndexedDB() {
+    /**
+     *this funciton opens connection to IndexedDB and save db instance as window.db */
     window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
     if (!window.indexedDB) {
@@ -9,7 +11,7 @@ function openIndexedDB() {
     let request = window.indexedDB.open("ImagesDB", 1);
     window.request = request;
 
-    request.onupgradeneeded = function (event) {
+    request.onupgradeneeded = event => {
         let db = event.target.result;
 
         db.createObjectStore("imagesStorage", { keyPath: "id", autoIncrement: true })
@@ -19,7 +21,7 @@ function openIndexedDB() {
     window.request.addEventListener('success', event => { window.db = event.target.result; });
 
 
-    request.onerror = function (event) {
+    request.onerror = event => {
         alert(`indexedDB not aloowed ${event.target.errorCode}`);
     }
 
@@ -28,6 +30,7 @@ function openIndexedDB() {
 }
 
 function RequestToDB(callback) {
+    /**this function garanted that caalback will have access to window.db */
     if (!window.db) {
         let request = window.request || openIndexedDB();
         request.addEventListener('success', event => { callback() })
@@ -38,6 +41,7 @@ function RequestToDB(callback) {
 }
 
 function forEachCollection(callback) {
+    /**this funciton represented foreach principle for each collection in db  */
 
     RequestToDB(() => {
         window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage").openCursor().onsuccess = event => {
@@ -51,6 +55,7 @@ function forEachCollection(callback) {
 }
 
 function addImageToDB(image) {
+    /**this function saves image in db and returns promise to return saved image-object(with id) */
     let promise = new Promise((resolve, reject) => {
         let transaction = window.db.transaction(["imagesStorage"], "readwrite");
 
@@ -69,15 +74,27 @@ function addImageToDB(image) {
 
 
 function loadImagesFromDB() {
-    window.db.transaction("imagesStorage").objectStore("imagesStorage").openCursor().onsuccess = function (event) {
-        let cursor = event.target.result;
-        if (cursor) {
-            displayImage(cursor.value);
-            cursor.continue();
-        }
-    };
-}
+    /**this function returns promise to return all images from db*/
+    let promise = new Promise((resolve, reject) => {
+        let images = new Array();
+        RequestToDB(() => {
+            window.db.transaction("imagesStorage").objectStore("imagesStorage").openCursor().onsuccess = function (event) {
+                let cursor = event.target.result;
+                if (cursor) {
+                    images.push(cursor.value);
+                    cursor.continue();
+                }
+                else {
+                    resolve(images);
+                }
+            };
+        })
 
+    })
+
+    return promise;
+}
+/*
 function forEachImage(callback) {
     RequestToDB(() => {
         window.db.transaction("imagesStorage", "readwrite").objectStore("imagesStorage").openCursor().onsuccess = event => {
@@ -89,7 +106,7 @@ function forEachImage(callback) {
         }
     })
 }
-
+*/
 function getImage(id) {
     let promise = new Promise((resolve, reject) => {
         RequestToDB(() => {

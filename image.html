@@ -13,68 +13,70 @@
 </head>
 
 <body>
-    <div class="container-column-two">
-        <div id="left-column">
-            <img id="big-size-image"></img>
+    <div id="content">
+
+
+        <div class="container-column-two">
+            <div id="left-column">
+                <img id="big-size-image"></img>
+            </div>
+
+            <div id="right-column">
+                <span>
+                    <p class="label">Image name: </p>
+                    <p id="image-name"></p>
+                    <button onclick="editName();">Edit</button>
+                </span>
+                <div id="name-edit">
+                    <input id="name-input" type="text"></input>
+                    <button onclick="changeName();">ok</button>
+                </div>
+                <span>
+                    <p class="label">Format: </p>
+                    <p id="image-format"></p>
+                </span>
+                <span>
+                    <p class="label">Sizes: </p>
+                    <p id="image-size-width"></p>
+                    <p id="image-size-height"></p>
+                </span>
+                <span>
+                    <p class="label">Wage: </p>
+                    <p id="image-wage"></p>
+                </span>
+                <span>
+                    <p class="label">Type: </p>
+                    <p id="image-type"></p>
+                </span>
+                <span>
+                    <p class="label">Create time: </p>
+                    <p id="image-create-time"></p>
+                </span>
+                <span>
+                    <p class="label">Description: </p>
+                    <p id="image-description"></p>
+                    <button onclick="editDescription();">Edit</button>
+                </span>
+                <div id="description-edit">
+                    <textarea id="description-input"></textarea>
+                    <button onclick="changeDescription();">Ok</button>
+                </div>
+                <span>
+                    <p class="label">Tags: </p>
+                    <p id="image-tags"></p>
+                </span>
+                <span>
+                    <button onclick="downloadImage();">Download</button>
+                    <button onclick="removeImage();">Remove</button>
+                </span>
+
+                <div id="collections">
+
+                </div>
+            </div>
+
         </div>
-
-        <div id="right-column">
-            <span>
-                <p class="label">Image name: </p>
-                <p id="image-name"></p>
-                <button onclick="editName();">Edit</button>
-            </span>
-            <div id="name-edit">
-                <input id="name-input" type="text"></input>
-                <button onclick="changeName();">ok</button>
-            </div>
-            <span>
-                <p class="label">Format: </p>
-                <p id="image-format"></p>
-            </span>
-            <span>
-                <p class="label">Sizes: </p>
-                <p id="image-size-width"></p>
-                <p id="image-size-height"></p>
-            </span>
-            <span>
-                <p class="label">Wage: </p>
-                <p id="image-wage"></p>
-            </span>
-            <span>
-                <p class="label">Type: </p>
-                <p id="image-type"></p>
-            </span>
-            <span>
-                <p class="label">Create time: </p>
-                <p id="image-create-time"></p>
-            </span>
-            <span>
-                <p class="label">Description: </p>
-                <p id="image-description"></p>
-                <button onclick="editDescription();">Edit</button>
-            </span>
-            <div id="description-edit">
-                <textarea id="description-input"></textarea>
-                <button onclick="changeDescription();">Ok</button>
-            </div>
-            <span>
-                <p class="label">Tags: </p>
-                <p id="image-tags"></p>
-            </span>
-            <span>
-                <p class="label">Download: </p><button onclick="downloadImage();">Download</button>
-            </span>
-            <span>
-                <p class="label">Remove: </p><button onclick="removeImage();">Remove</button>
-            </span>
-            <div id="collections">
-
-            </div>
-        </div>
-
     </div>
-
 </body>
 
 </html>

@@ -1,3 +1,5 @@
+https://malexit240.github.io/local-galery/
+
 10.10.20 - 30 minutes
 11.10.20 - 3 hours
 12.10.20 - 1.5 hours
@@ -7,3 +9,4 @@
 16.10.20 - 30 minutes
 19.10.20 - 6 hours
 20.10.20 - 5 hours
+21.10.20 - 3 hour
