@@ -118,8 +118,8 @@ function searchByName(event) {
 function searchByTag(event) {
     /**this function follows to page with images by tag */
     const search_word = document.getElementById('search-field').value;
-    getImagesByTag().then(images => {
-        if (images.length)
+    getImagesByTag(search_word).then(images => {
+        if (images.length > 0)
             goToTag(search_word);
         else
             sendMessage('did not found images by this tag', 20);
