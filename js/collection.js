@@ -44,10 +44,8 @@ function downloadImagesAsArchiveButton(event) {
             images.forEach(image => {
                 displayImage(image);
             })
-
         });
-        document.getElementById("delete-only-collection-button").style.visibility = 'none';
-        document.getElementById("delete-with-image-button").style.visibility = 'none';
+        document.getElementById("delete-div").style.display = 'none';
     }
 
     document.getElementById("download-button").onclick = event => downloadImagesAsArchiveButton(event);
