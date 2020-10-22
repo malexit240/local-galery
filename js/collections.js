@@ -73,9 +73,19 @@ function displayAllImagesPreview() {
     }));
 
     document.getElementById('create-collection-button').onclick = event => {
-        addCollection(document.getElementById("collection-name-input").value).then(collection => {
-            displayCollection(collection);
-        })
+        const name = document.getElementById("collection-name-input").value;
+        if (name.length <= 64 && name.length) {
+            addCollection(name).then(collection => {
+                displayCollection(collection);
+            })
+        }
+        else if (!name.length) {
+            sendMessage('Collection name must not be empty', 40);
+        }
+        else {
+            sendMessage('Collection name must be smaller than 64 characters', 40);
+        }
+
     };
 
 

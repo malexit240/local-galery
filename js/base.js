@@ -49,7 +49,6 @@ function addImage(file, description) {
 
 function startImageLoader() {
     /**this function add image loader functionality to page */
-    const status = document.getElementById('status');
 
     const add_button = document.getElementById('add-image');
     let file = null;
@@ -60,9 +59,9 @@ function startImageLoader() {
     });
 
     add_button.onclick = event => {
-        status.textContent = '';
+
         if (!file.type.match('image.*')) {
-            status.textContent = 'The selected file does not appear to be an image'
+            sendMessage('The selected file does not appear to be an image', 30);
             return;
         }
 
@@ -98,6 +97,12 @@ function displayImage(image) {
 function searchByName(event) {
     /**this function check whether image name matches with search name and follows to image page if it true */
     const search_word = document.getElementById('search-field').value;
+
+    if (search_word.length == 0) {
+        sendMessage('search field must not be empty', 20);
+        return;
+    }
+
     let cursor = event.target.result;
     if (cursor) {
         if (cursor.value.name.includes(search_word)) {
@@ -105,13 +110,21 @@ function searchByName(event) {
         }
         cursor.continue();
     }
+    else {
+        sendMessage('did not found image with this name', 20);
+    }
 }
 
 function searchByTag(event) {
     /**this function follows to page with images by tag */
     const search_word = document.getElementById('search-field').value;
+    getImagesByTag().then(images => {
+        if (images.length)
+            goToTag(search_word);
+        else
+            sendMessage('did not found images by this tag', 20);
+    })
 
-    goToTag(search_word);
 }
 
 function GlobalSearch() {
@@ -128,3 +141,29 @@ function GlobalSearch() {
     });
 }
 
+function sendMessage(message, level = 20) {
+    /**this function show status message on page*/
+    let center_status_bar = document.getElementById('center-status-bar');
+    let status_block = document.getElementById('status-bar');
+    let status_message = document.getElementById('status');
+    center_status_bar.style.setProperty('z-index', 99);
+    status_block.style.opacity = 1;
+    status_message.textContent = message;
+
+    switch (level) {
+        case 20:
+            status_block.style.setProperty('background-color', '#d1ecf1d4');
+            break;
+        case 30:
+            status_block.style.setProperty('background-color', '#fff3cdd4');
+            break;
+        case 40:
+            status_block.style.setProperty('background-color', '#f8d7dad4');
+            break;
+    }
+
+    setTimeout(() => {
+        status_block.style.opacity = 0;
+        center_status_bar.style.setProperty('z-index', -1);
+    }, 100 * message.length);
+}

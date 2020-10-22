@@ -1,3 +1,4 @@
+
 *{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 20px;
@@ -115,7 +116,7 @@ flex-direction: row;
 }
 
 #collections{
-    width: 20em;
+    max-width: 20em;
 }
 
 .collection-element{
@@ -301,3 +302,87 @@ flex-direction: row;
 #create-collection-block{
     padding: 1em;
 }
+
+#center-status-bar{
+    position: fixed;
+    width: 100%;
+    z-index: -1;
+    max-width: 1600px;
+}
+#status-bar{
+    background-color: #c2e4c2d4;
+    border-bottom: white solid 5px;
+    border-left: white solid 5px;
+    border-right: white solid 5px;
+    border-radius: 0px 0px 50px 50px;
+    width: fit-content;
+    margin: 0 auto;
+    opacity: 0;
+    transition: opacity 1s;
+    
+}
+
+#status-bar>p{
+    width: fit-content;
+    margin: 0 auto;
+    padding: 1em 2em;
+}
+
+#image-size-width{
+margin-right: 1em;
+}
+
+#image-size-height{
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+@media screen and (max-width:1600px){
+    #big-size-image{
+        max-width: 95%;
+    }
+}
+
+@media screen and (max-width:1024px){
+    .container-column-two{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #left-column{
+        margin: 0 auto;
+        width: auto;
+    }
+    #right-column{
+        margin: 0 auto;
+        width: auto;
+    }
+}
+
+@media screen and (max-width:720px){
+    #description-text-area{
+        width: 400px;
+    }
+}
+@media screen and (max-width:480px){
+    #description-text-area{
+        width: 250px;
+    }
+
+    .image{
+        max-width:320px;
+    }
+    .image-container{
+        width:320px;
+        margin:0.5em;
+    }
+    #file-selector{
+        font-size: 0.9em;
+    }
+    #status-bar>p{
+        padding: 0.5em 1.5em;
+    }
+    
+}
+
+
