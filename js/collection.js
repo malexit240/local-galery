@@ -46,6 +46,8 @@ function downloadImagesAsArchiveButton(event) {
             })
 
         });
+        document.getElementById("delete-only-collection-button").style.visibility = 'none';
+        document.getElementById("delete-with-image-button").style.visibility = 'none';
     }
 
     document.getElementById("download-button").onclick = event => downloadImagesAsArchiveButton(event);
