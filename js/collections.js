@@ -1,19 +1,5 @@
-function addCollection() {
-    const name = document.getElementById("collection-name-input").value;
-
-    window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage").add({
-        name: name,
-        images: []
-    });
-
-    window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage").openCursor(null, 'prev').onsuccess = event => {
-        let cursor = event.target.result;
-        if (cursor)
-            displayCollection(cursor.value);
-    }
-}
-
 function displayCollection(collection) {
+    /**this function displays collection on page */
     const collections_list = document.getElementById("collections-list");
 
     let div = document.createElement('div');
@@ -40,30 +26,19 @@ function displayCollection(collection) {
         }
     })
 
-    div.onclick = event => {
-        goToCollection(collection.id);
-    }
-    p.innerHTML = collection.name;
+    div.onclick = event => goToCollection(collection.id);
+    p.textContent = collection.name;
+
     div.append(p);
     div.append(img);
     collections_list.append(div);
 }
 
-function getCollections() {
-    let collections = new Array();
 
-    window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage").openCursor().onsuccess = event => {
-        let cursor = event.target.result;
-        if (cursor) {
-            collections.push(cursor.value)
-            cursor.continue();
-        }
-    }
-    return collections;
-}
 
 
 function displayAllImagesPreview() {
+    /**this function display link to all images */
     const div = document.getElementById('all-images-preview');
     div.onclick = event => {
         goToAllImages();
@@ -91,15 +66,17 @@ function displayAllImagesPreview() {
 
 
 (function () {
-    const create_button = document.getElementById('create-collection-button');
-
     displayAllImagesPreview();
 
-    forEachCollection(displayCollection);
+    getCollections().then(collections => collections.forEach(collection => {
+        displayCollection(collection);
+    }));
 
-    create_button.addEventListener('click', event => {
-        RequestToDB(addCollection);
-    });
+    document.getElementById('create-collection-button').onclick = event => {
+        addCollection(document.getElementById("collection-name-input").value).then(collection => {
+            displayCollection(collection);
+        })
+    };
 
 
 }())

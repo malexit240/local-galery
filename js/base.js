@@ -1,48 +1,54 @@
 function getTagsFromDescription(description) {
-    let tags = description.match(/(#[A-z]|#[0-9])\w+/g) || new Array();
+    /**this function returns array of unique tags from description */
+    let tags = description.match(/(#[A-z]|#[0-9])\w+/g) || [];
     tags = [...new Set(tags)];
     return tags;
 }
 
 function addImage(file, description) {
+    /**this function create image-object from data
+     *  then calls function for saving  it to db
+     * and return promise to return saved image-object*/
+    const promise = new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', event => {
+            let blob = event.target.result
+            let imageElement = new Image();
+            imageElement.src = blob;
+            imageElement.onload = event => {
+                let format = "square";
 
-    const output = document.getElementById('output');
-    const reader = new FileReader();
-    reader.addEventListener('load', event => {
-        let blob = event.target.result
-        let imageElement = new Image();
-        imageElement.src = blob;
-        imageElement.onload = event => {
-            let format = "squad";
+                if (imageElement.naturalWidth > imageElement.naturalHeight) {
+                    format = "album";
+                }
+                else if (imageElement.naturalWidth < imageElement.naturalHeight) {
+                    format = "portret";
+                }
 
-            if (imageElement.naturalWidth > imageElement.naturalHeight) {
-                format = "album";
+                let tags = getTagsFromDescription(description);
+
+                let image = {
+                    name: file.name,
+                    sizes: { width: imageElement.naturalWidth, height: imageElement.naturalHeight },
+                    format: format,
+                    wage: file.size / 1024 / 1024,
+                    mimetype: file.type.replace('image/', ''),
+                    create_time: file.lastModified,
+                    image: blob,
+                    description: description,
+                    tags: tags
+                };
+                addImageToDB(image).then(resolve);
+
             }
-            else if (imageElement.naturalWidth < imageElement.naturalHeight) {
-                format = "portret";
-            }
-
-            let tags = getTagsFromDescription(description);
-
-            let image = {
-                name: file.name,
-                sizes: { width: imageElement.naturalWidth, height: imageElement.naturalHeight },
-                format: format,
-                wage: file.size / 1024 / 1024,
-                mimetype: file.type.replace('image/', ''),
-                create_time: file.lastModified / 1000,
-                image: blob,
-                description: description,
-                tags: tags
-            };
-            addImageToDB(image).then(displayImage);
-
-        }
+        });
+        reader.readAsDataURL(file);
     });
-    reader.readAsDataURL(file);
+    return promise;
 }
 
 function startImageLoader() {
+    /**this function add image loader functionality to page */
     const status = document.getElementById('status');
 
     const add_button = document.getElementById('add-image');
@@ -55,24 +61,21 @@ function startImageLoader() {
 
     add_button.onclick = event => {
         status.textContent = '';
-        if (!file.type) {
-            status.textContent = 'Error: The File.type property does not appear to be supported on this browser.';
-            return;
-        }
         if (!file.type.match('image.*')) {
-            status.textContent = 'Error: The selected file does not appear to be an image.'
+            status.textContent = 'The selected file does not appear to be an image'
             return;
         }
 
         let description = document.getElementById('description-text-area').value;
 
-        addImage(file, description);
+        addImage(file, description).then(displayImage);
 
         add_button.setAttribute('disabled', true);
     }
 }
 
 function displayImage(image) {
+    /**this function displays image-object on page */
     const container = document.getElementById("images-container");
 
     let div = document.createElement("div");
@@ -92,12 +95,8 @@ function displayImage(image) {
 
 }
 
-function downloadImage(image) {
-    let url = image.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
-    window.open(url);
-}
-
 function searchByName(event) {
+    /**this function check whether image name matches with search name and follows to image page if it true */
     const search_word = document.getElementById('search-field').value;
     let cursor = event.target.result;
     if (cursor) {
@@ -109,12 +108,14 @@ function searchByName(event) {
 }
 
 function searchByTag(event) {
+    /**this function follows to page with images by tag */
     const search_word = document.getElementById('search-field').value;
 
     goToTag(search_word);
 }
 
 function GlobalSearch() {
+    /**this function choose type of search (by name or tag) in dependency from first symbol in search field */
     const search_word = document.getElementById('search-field').value;
 
     let findByName = true;

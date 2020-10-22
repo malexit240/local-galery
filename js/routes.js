@@ -1,3 +1,5 @@
+/**this file contains functions that follow to other addresses */
+
 function goToImage(id) {
     window.location.href = `./image.html?id=${id}`;
 }

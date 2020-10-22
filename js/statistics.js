@@ -1,3 +1,4 @@
+
 (function () {
     navigator.storage.estimate().then(value => {
         document.getElementById('used-space').style.width = `${value.usage / value.quota}%`;
@@ -11,13 +12,3 @@
         }
     })
 }())
-
-function clearAll() {
-    RequestToDB(() => {
-        window.db.transaction("imagesStorage", "readwrite").objectStore("imagesStorage").clear().onsuccess = event => {
-            document.location.href = document.location.href;
-        }
-        window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage").clear();
-
-    })
-}

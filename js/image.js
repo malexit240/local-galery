@@ -58,24 +58,23 @@ function displayImage() {
     document.getElementById('image-size-height').innerHTML = window.image.sizes.height;
     document.getElementById('image-wage').innerHTML = parseFloat(window.image.wage).toFixed(2) + 'MB';
     document.getElementById('image-type').innerHTML = window.image.mimetype;
-    document.getElementById('image-create-time').innerHTML = (new Date(window.image.create_time * 1000)).toDateString();
+    document.getElementById('image-create-time').innerHTML = (new Date(window.image.create_time)).toDateString();
     document.getElementById('image-description').innerHTML = addHashTags(window.image.description);
     document.getElementById('image-tags').innerHTML = window.image.tags;
 
     const collections_element = document.getElementById("collections");
 
-    forEachCollection(element => {
-
+    getCollections().then(collections => collections.forEach(collection => {
         let div = document.createElement("div");
         div.className = "collection-element";
-        div.collection_id = element.id;
-        div.in_collection = element.images.includes(window.image_id);
+        div.collection_id = collection.id;
+        div.in_collection = collection.images.includes(window.image_id);
 
         div.onclick = event => {
             if (div.in_collection)
-                excludeImageToCollection(window.image_id, element.id);
+                excludeImageToCollection(window.image_id, collection.id);
             else
-                includeImageToCollection(window.image_id, element.id);
+                includeImageToCollection(window.image_id, collection.id);
 
             div.in_collection = !div.in_collection;
 
@@ -84,7 +83,7 @@ function displayImage() {
         }
 
         let p = document.createElement("p");
-        p.innerHTML = element.name;
+        p.innerHTML = collection.name;
 
         div.append(p);
 
@@ -96,7 +95,8 @@ function displayImage() {
         div.append(p);
 
         collections_element.append(div);
-    });
+    }))
+
 }
 
 
