@@ -1,17 +1,17 @@
 function displayCollection(collection) {
     /**this function displays collection on page */
-    const collections_list = document.getElementById("collections-list");
+    const collections_list = document.getElementById('collections-list');
 
     let div = document.createElement('div');
     div.className = 'collection-preview';
 
-    let p = document.createElement("p");
+    let p = document.createElement('p');
     let img = document.createElement('img');
     img.className = 'image-preview';
 
 
     RequestToDB(() => {
-        window.db.transaction("imagesStorage").objectStore("imagesStorage").openCursor().onsuccess = event => {
+        window.db.transaction('imagesStorage').objectStore('imagesStorage').openCursor().onsuccess = event => {
             let cursor = event.target.result;
             if (cursor) {
                 if (collection.images.includes(cursor.value.id))
@@ -48,7 +48,7 @@ function displayAllImagesPreview() {
     img.className = 'image-preview';
 
     RequestToDB(() => {
-        window.db.transaction("imagesStorage").objectStore("imagesStorage").openCursor().onsuccess = event => {
+        window.db.transaction('imagesStorage').objectStore('imagesStorage').openCursor().onsuccess = event => {
             let cursor = event.target.result;
             if (cursor) {
                 img.src = cursor.value.image;
@@ -73,7 +73,7 @@ function displayAllImagesPreview() {
     }));
 
     document.getElementById('create-collection-button').onclick = event => {
-        const name = document.getElementById("collection-name-input").value;
+        const name = document.getElementById('collection-name-input').value;
         if (name.length <= 64 && name.length) {
             addCollection(name).then(collection => {
                 displayCollection(collection);

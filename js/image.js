@@ -5,7 +5,7 @@ function downloadImage() {
 
 function removeImage() {
     RequestToDB(() => {
-        window.db.transaction("imagesStorage", "readwrite").objectStore("imagesStorage").delete(Number(window.image_id)).onsuccess = event => {
+        window.db.transaction('imagesStorage', 'readwrite').objectStore('imagesStorage').delete(Number(window.image_id)).onsuccess = event => {
             window.history.back();
         }
 
@@ -15,7 +15,7 @@ function removeImage() {
 function includeImageToCollection(image_id, collection_id) {
 
     RequestToDB(() => {
-        let objectStore = window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage")
+        let objectStore = window.db.transaction('collectionsStorage', 'readwrite').objectStore('collectionsStorage')
         objectStore.get(collection_id).onsuccess = event => {
             let collection = event.target.result;
             collection.images.push(image_id);
@@ -27,7 +27,7 @@ function includeImageToCollection(image_id, collection_id) {
 function excludeImageToCollection(image_id, collection_id) {
 
     RequestToDB(() => {
-        let objectStore = window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage")
+        let objectStore = window.db.transaction('collectionsStorage', 'readwrite').objectStore('collectionsStorage')
         objectStore.get(collection_id).onsuccess = event => {
             let collection = event.target.result;
             collection.images.splice(collection.images.indexOf(image_id), 1);
@@ -42,7 +42,7 @@ function addHashTags(description) {
 
     if (tags) {
         tags.forEach(element => {
-            html = html.replaceAll(element, `<a href='./collection.html?tag=${element}'">${element}</a>`);
+            html = html.replaceAll(element, `<a href='./collection.html?tag=${element}''>${element}</a>`);
         });
     }
 
@@ -62,11 +62,11 @@ function displayImage() {
     document.getElementById('image-description').innerHTML = addHashTags(window.image.description);
     document.getElementById('image-tags').innerHTML = window.image.tags;
 
-    const collections_element = document.getElementById("collections");
+    const collections_element = document.getElementById('collections');
 
     getCollections().then(collections => collections.forEach(collection => {
-        let div = document.createElement("div");
-        div.className = "collection-element";
+        let div = document.createElement('div');
+        div.className = 'collection-element';
         div.collection_id = collection.id;
         div.in_collection = collection.images.includes(window.image_id);
 
@@ -78,19 +78,19 @@ function displayImage() {
 
             div.in_collection = !div.in_collection;
 
-            p.style.visibility = div.in_collection ? "visible" : "hidden"
+            p.style.visibility = div.in_collection ? 'visible' : 'hidden'
 
         }
 
-        let p = document.createElement("p");
+        let p = document.createElement('p');
         p.innerHTML = collection.name;
 
         div.append(p);
 
-        p = document.createElement("p");
-        p.innerHTML = "V";
+        p = document.createElement('p');
+        p.innerHTML = 'V';
 
-        p.style.visibility = div.in_collection ? "visible" : "hidden"
+        p.style.visibility = div.in_collection ? 'visible' : 'hidden'
 
         div.append(p);
 
@@ -113,7 +113,7 @@ function changeName() {
     image.name = name + '.' + image.name.split('.')[1];
 
     RequestToDB(() => {
-        window.db.transaction("imagesStorage", "readwrite").objectStore("imagesStorage").put(image).onsuccess = event => {
+        window.db.transaction('imagesStorage', 'readwrite').objectStore('imagesStorage').put(image).onsuccess = event => {
             window.image = image;
             document.getElementById('image-name').innerHTML = image.name;
             document.getElementById('name-edit').style.display = 'none';
@@ -139,7 +139,7 @@ function changeDescription() {
     image.tags = getTagsFromDescription(description);
 
     RequestToDB(() => {
-        window.db.transaction("imagesStorage", "readwrite").objectStore("imagesStorage").put(image).onsuccess = event => {
+        window.db.transaction('imagesStorage', 'readwrite').objectStore('imagesStorage').put(image).onsuccess = event => {
             window.image = image;
             document.getElementById('image-description').innerHTML = addHashTags(image.description);
             document.getElementById('image-tags').innerHTML = image.tags;

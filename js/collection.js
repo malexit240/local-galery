@@ -8,12 +8,12 @@ function downloadImagesAsArchiveButton(event) {
     button.textContent = 'Wait';
     var zip = new JSZip();
     window.images.forEach(element => {
-        zip.file(element.name, element.image.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, ""), { base64: true });
+        zip.file(element.name, element.image.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, ''), { base64: true });
     })
 
-    zip.generateAsync({ type: "blob" })
+    zip.generateAsync({ type: 'blob' })
         .then(content => {
-            saveAs(content, "example.zip");
+            saveAs(content, 'example.zip');
             button.removeAttribute('disabled');
             button.textContent = oldTextContent;
         });
@@ -45,11 +45,11 @@ function downloadImagesAsArchiveButton(event) {
                 displayImage(image);
             })
         });
-        document.getElementById("delete-div").style.display = 'none';
+        document.getElementById('delete-div').style.display = 'none';
     }
 
-    document.getElementById("download-button").onclick = event => downloadImagesAsArchiveButton(event);
-    document.getElementById("delete-only-collection-button").onclick = event => deleteCollection(window.collection_id).then(value => window.history.back());
-    document.getElementById("delete-with-image-button").onclick = event => deleteCollectionWithImage(window.collection).then(value => window.history.back());
+    document.getElementById('download-button').onclick = event => downloadImagesAsArchiveButton(event);
+    document.getElementById('delete-only-collection-button').onclick = event => deleteCollection(window.collection_id).then(value => window.history.back());
+    document.getElementById('delete-with-image-button').onclick = event => deleteCollectionWithImage(window.collection).then(value => window.history.back());
 
 })();

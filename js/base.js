@@ -9,20 +9,20 @@ function addImage(file, description) {
     /**this function create image-object from data
      *  then calls function for saving  it to db
      * and return promise to return saved image-object*/
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise(resolve => {
         const reader = new FileReader();
         reader.addEventListener('load', event => {
             let blob = event.target.result
             let imageElement = new Image();
             imageElement.src = blob;
             imageElement.onload = event => {
-                let format = "square";
+                let format = 'square';
 
                 if (imageElement.naturalWidth > imageElement.naturalHeight) {
-                    format = "album";
+                    format = 'album';
                 }
                 else if (imageElement.naturalWidth < imageElement.naturalHeight) {
-                    format = "portret";
+                    format = 'portret';
                 }
 
                 let tags = getTagsFromDescription(description);
@@ -75,15 +75,15 @@ function startImageLoader() {
 
 function displayImage(image) {
     /**this function displays image-object on page */
-    const container = document.getElementById("images-container");
+    const container = document.getElementById('images-container');
 
-    let div = document.createElement("div");
-    div.className = "image-container";
+    let div = document.createElement('div');
+    div.className = 'image-container';
 
-    let img = document.createElement("img");
+    let img = document.createElement('img');
     img.src = image.image;
-    img.className = "image"
-    img.setAttribute("image-id", image.id);
+    img.className = 'image'
+    img.setAttribute('image-id', image.id);
 
     div.onclick = event => {
         goToImage(image.id);
@@ -137,7 +137,7 @@ function GlobalSearch() {
         findByName = false;
 
     RequestToDB(() => {
-        window.db.transaction("imagesStorage").objectStore("imagesStorage").openCursor().onsuccess = (findByName && searchByName) || searchByTag;
+        window.db.transaction('imagesStorage').objectStore('imagesStorage').openCursor().onsuccess = (findByName && searchByName) || searchByTag;
     });
 }
 

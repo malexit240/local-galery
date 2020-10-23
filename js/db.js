@@ -3,18 +3,18 @@ function openIndexedDB() {
     window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
     if (!window.indexedDB) {
-        alert("indexedDB not aloowed");
+        alert('indexedDB not aloowed');
         return;
     }
 
-    let request = window.indexedDB.open("ImagesDB", 1);
+    let request = window.indexedDB.open('ImagesDB', 1);
     window.request = request;
 
     request.onupgradeneeded = event => {
         let db = event.target.result;
 
-        db.createObjectStore("imagesStorage", { keyPath: "id", autoIncrement: true })
-        db.createObjectStore("collectionsStorage", { keyPath: "id", autoIncrement: true })
+        db.createObjectStore('imagesStorage', { keyPath: 'id', autoIncrement: true })
+        db.createObjectStore('collectionsStorage', { keyPath: 'id', autoIncrement: true })
     }
 
     window.request.addEventListener('success', event => { window.db = event.target.result; });
@@ -41,10 +41,10 @@ function RequestToDB(callback) {
 
 function addImageToDB(image) {
     /**this function saves image in db and returns promise to return saved image-object(with id) */
-    let promise = new Promise((resolve, reject) => {
-        let transaction = window.db.transaction(["imagesStorage"], "readwrite");
+    let promise = new Promise(resolve => {
+        let transaction = window.db.transaction(['imagesStorage'], 'readwrite');
 
-        let objectStore = transaction.objectStore("imagesStorage")
+        let objectStore = transaction.objectStore('imagesStorage')
 
         objectStore.add(image).onsuccess = event => {
             objectStore.openCursor(null, 'prev').onsuccess = event => {
@@ -53,17 +53,17 @@ function addImageToDB(image) {
                 }
             }
         }
-    })
+    });
     return promise;
 }
 
 
 function loadImagesFromDB() {
     /**this function returns promise to return all images from db*/
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise(resolve => {
         let images = [];
         RequestToDB(() => {
-            window.db.transaction("imagesStorage").objectStore("imagesStorage").openCursor().onsuccess = function (event) {
+            window.db.transaction('imagesStorage').objectStore('imagesStorage').openCursor().onsuccess = function (event) {
                 let cursor = event.target.result;
                 if (cursor) {
                     images.push(cursor.value);
@@ -82,9 +82,9 @@ function loadImagesFromDB() {
 
 function getImage(id) {
     /** this function returns promise to return image-object by id*/
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise(resolve => {
         RequestToDB(() => {
-            window.db.transaction("imagesStorage", "readwrite").objectStore("imagesStorage").get(Number(id)).onsuccess = event => {
+            window.db.transaction('imagesStorage', 'readwrite').objectStore('imagesStorage').get(Number(id)).onsuccess = event => {
                 resolve(event.target.result);
             }
         })
@@ -95,10 +95,10 @@ function getImage(id) {
 
 function getImagesByTag(tag) {
     /**this function returns promise to return images by tag */
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise(resolve => {
         RequestToDB(() => {
             let images = [];
-            window.db.transaction("imagesStorage").objectStore("imagesStorage").openCursor().onsuccess = event => {
+            window.db.transaction('imagesStorage').objectStore('imagesStorage').openCursor().onsuccess = event => {
                 let image = event.target.result;
                 if (image) {
                     if (image.value.tags.includes(tag))
@@ -117,9 +117,9 @@ function getImagesByTag(tag) {
 
 function getCollection(id) {
     /**this function return promise to return collection by id */
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise(resolve => {
         RequestToDB(() => {
-            window.db.transaction("collectionsStorage").objectStore("collectionsStorage").get(Number(id)).onsuccess = event => {
+            window.db.transaction('collectionsStorage').objectStore('collectionsStorage').get(Number(id)).onsuccess = event => {
                 resolve(event.target.result);
             }
         })
@@ -130,10 +130,10 @@ function getCollection(id) {
 
 function getImagesInCollection(collection) {
     /** this function returns promise to return images in collection*/
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise(resolve => {
         let images = [];
         RequestToDB(() => {
-            window.db.transaction("imagesStorage").objectStore("imagesStorage").openCursor().onsuccess = event => {
+            window.db.transaction('imagesStorage').objectStore('imagesStorage').openCursor().onsuccess = event => {
                 let cursor = event.target.result;
                 if (cursor) {
                     if (collection.images.includes(cursor.key)) {
@@ -153,9 +153,9 @@ function getImagesInCollection(collection) {
 
 function deleteCollection(id) {
     /**this function delete collection from collectionsStore */
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise(resolve => {
         RequestToDB(() => {
-            window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage").delete(Number(id)).onsuccess = event => {
+            window.db.transaction('collectionsStorage', 'readwrite').objectStore('collectionsStorage').delete(Number(id)).onsuccess = event => {
                 resolve();
             }
         })
@@ -167,9 +167,9 @@ function deleteCollection(id) {
 
 function deleteCollectionWithImage(collection) {
     /**this function delete collection from collectionsStore and delete all includes in it images */
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise(resolve => {
         RequestToDB(() => {
-            let objectStore = window.db.transaction("imagesStorage", "readwrite").objectStore("imagesStorage");
+            let objectStore = window.db.transaction('imagesStorage', 'readwrite').objectStore('imagesStorage');
             objectStore.openCursor().onsuccess = event => {
 
                 let image = event.target.result;
@@ -194,7 +194,7 @@ function addCollection(name) {
     /**this function adds collection to db */
     const promise = new Promise(resolve => {
         RequestToDB(() => {
-            let objectStore = window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage")
+            let objectStore = window.db.transaction('collectionsStorage', 'readwrite').objectStore('collectionsStorage')
 
             objectStore.add({
                 name: name,
@@ -214,7 +214,7 @@ function getCollections() {
     const promise = new Promise(resolve => {
         RequestToDB(() => {
             let collections = [];
-            window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage").openCursor().onsuccess = event => {
+            window.db.transaction('collectionsStorage', 'readwrite').objectStore('collectionsStorage').openCursor().onsuccess = event => {
                 let cursor = event.target.result;
                 if (cursor) {
                     collections.push(cursor.value)
@@ -231,10 +231,10 @@ function getCollections() {
 function clearAll() {
     /**this function clear all stores */
     RequestToDB(() => {
-        window.db.transaction("imagesStorage", "readwrite").objectStore("imagesStorage").clear().onsuccess = event => {
+        window.db.transaction('imagesStorage', 'readwrite').objectStore('imagesStorage').clear().onsuccess = event => {
             document.location.href = document.location.href;
         }
-        window.db.transaction("collectionsStorage", "readwrite").objectStore("collectionsStorage").clear();
+        window.db.transaction('collectionsStorage', 'readwrite').objectStore('collectionsStorage').clear();
 
     })
 }

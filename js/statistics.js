@@ -7,7 +7,7 @@
     })
 
     RequestToDB(() => {
-        window.db.transaction("imagesStorage").objectStore("imagesStorage").count().onsuccess = event => {
+        window.db.transaction('imagesStorage').objectStore('imagesStorage').count().onsuccess = event => {
             document.getElementById('files-amount').innerHTML = event.target.result;
         }
     })
